@@ -212,7 +212,7 @@ def build_roll(ws):
 
     ws.row_dimensions[1].height = 34
     ws.row_dimensions[2].height = 20
-    ws.row_dimensions[3].height = 24
+    ws.row_dimensions[3].height = 28
     ws.row_dimensions[4].height = 16
     ws.row_dimensions[5].height = 28
     ws.row_dimensions[6].height = 24
@@ -234,30 +234,35 @@ def build_roll(ws):
         border(NAVY_DEEP),
     )
 
-    label_fill = fill("E7EEF4")
-    input_fill = fill(WHITE)
-    input_border = Border(
-        left=side("thin", "E7EEF4"),
-        right=side("thin", "E7EEF4"),
-        top=side("thin", "E7EEF4"),
-        bottom=side("medium", NAVY),
-    )
-    meta_border = border("E7EEF4")
+    label_fill = fill("F8F1DE")
+    input_fill = fill("FFFFFF")
+    input_border = border(NAVY, "medium")
+    meta_border = border("F8F1DE")
 
     def meta_label(range_ref, text):
-        merge(ws, range_ref, text, font(10, True, NAVY), label_fill, right, meta_border)
+        merge(ws, range_ref, text, font(10, True, NAVY), label_fill, center, meta_border)
 
     def meta_input(range_ref):
-        merge(ws, range_ref, None, font(12, False, INK), input_fill, Alignment(horizontal="left", vertical="center", indent=1), input_border, locked=False)
+        merge(
+            ws,
+            range_ref,
+            None,
+            font(12, False, INK),
+            input_fill,
+            Alignment(horizontal="left", vertical="center", indent=1),
+            input_border,
+            locked=False,
+        )
 
+    # Inputs sit in wider merges so 時間 and 負責人 can actually be written in.
     meta_label("A3:A3", "日期")
     meta_input("B3:C3")
     meta_label("D3:E3", "時間")
-    meta_input("F3:G3")
-    meta_label("H3:I3", "負責人")
-    meta_input("J3:K3")
-    meta_label("L3:L3", "地點")
-    meta_input("M3:O3")
+    meta_input("F3:H3")
+    meta_label("I3:J3", "負責人")
+    meta_input("K3:L3")
+    meta_label("M3:M3", "地點")
+    meta_input("N3:O3")
 
     # Live totals. Values sit in the top-left cell of each merged block.
     kpi_specs = [
